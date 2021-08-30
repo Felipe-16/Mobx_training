@@ -1,14 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:mobx_training/components/login_widgets.dart';
+import 'login_controller.dart';
 
 const _rotuloEmail = 'Email';
 const _dicaEmail = 'seunome@dominio.com';
 const _rotuloSenha = 'Senha';
 const _dicaSenha = '*****';
 
-class Login extends StatelessWidget {
-  final TextEditingController _controladorEmail = TextEditingController();
-  final TextEditingController _controladorSenha = TextEditingController();
+class Login extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return LoginState();
+  }
+}
+
+class LoginState extends State<Login> {
+  Login_controller login_controller = Login_controller();
 
   @override
   Widget build(BuildContext context) {
@@ -18,47 +25,46 @@ class Login extends StatelessWidget {
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
               colors: [
-            Colors.blue[300],
-            Colors.blue[800],
+            Colors.blue[200],
+            Colors.blue[700],
           ])),
-      // appBar: AppBar(
-      //   title: Center(child: Text('Login')),
-      // ),
       child: Scaffold(
         backgroundColor: Colors.transparent,
         body: Center(
           child: SingleChildScrollView(
-            // decoration: BoxDecoration(
-            //     gradient: LinearGradient(
-            //         begin: Alignment.topLeft,
-            //         end: Alignment.bottomRight,
-            //         colors: [
-            //       Colors.blue[500],
-            //       Colors.blue[800],
-            //     ])),
             child: Padding(
               padding: const EdgeInsets.all(20.0),
               child: Column(
                 children: <Widget>[
-                  CircleAvatar(
-                    radius: 70.0,
-                    backgroundColor: Colors.transparent,
-                    backgroundImage: AssetImage('images/perfil.jpg'),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 8),
+                    child: CircleAvatar(
+                      radius: 60.0,
+                      backgroundColor: Colors.transparent,
+                      backgroundImage: AssetImage('images/google_avatar.png'),
+                    ),
                   ),
                   LoginWidget(
-                    controlador: _controladorEmail,
                     rotulo: _rotuloEmail,
                     dica: _dicaEmail,
                     icone: Icons.email,
+                    tipo: TextInputType.emailAddress,
+                    onChanged: login_controller.setEmail,
                   ),
                   LoginWidget(
-                    controlador: _controladorSenha,
                     rotulo: _rotuloSenha,
                     dica: _dicaSenha,
                     icone: Icons.lock,
+                    tipo: TextInputType.text,
+                    onChanged: login_controller.setSenha,
                   ),
                   RaisedButton(
-                    onPressed: null,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    onPressed: () {
+                      print('entrando...');
+                    },
                     child: Text('Entrar'),
                   ),
                 ],
@@ -69,8 +75,4 @@ class Login extends StatelessWidget {
       ),
     );
   }
-}
-
-class Particles {
-  Particles(int i, MaterialColor blue);
 }
