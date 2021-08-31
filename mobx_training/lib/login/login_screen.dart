@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobx_training/components/login_widgets.dart';
+import 'file:///C:/Users/Felps/Desktop/Mobx_training/mobx_training/lib/home/home_screen.dart';
 import 'login_controller.dart';
 
 const _rotuloEmail = 'Email';
@@ -64,6 +65,11 @@ class LoginState extends State<Login> {
                     ),
                     onPressed: () {
                       print('entrando...');
+                      final home = Home();
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                        return Home();
+                      }));
                     },
                     child: Text('Entrar'),
                   ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'file:///C:/Users/Felps/Desktop/Mobx_training/mobx_training/lib/home/home_screen.dart';
 import 'package:mobx_training/login/login_screen.dart';
 
 void main() {

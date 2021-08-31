@@ -1,6 +1,4 @@
-import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
-import 'login_screen.dart';
 
 part 'login_controller.g.dart';
 
