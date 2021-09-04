@@ -28,11 +28,8 @@ class HomeState extends State<Home> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Container(
-              color: Colors.red,
-              child: Text(
-                'teste',
-              ),
+            Text(
+              'teste',
             ),
           ],
         ),

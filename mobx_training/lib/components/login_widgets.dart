@@ -5,7 +5,8 @@ class LoginWidget extends StatelessWidget {
   final TextEditingController controller;
   final String rotulo;
   final String dica;
-  final IconData icone;
+  final IconData iconeEsq;
+  final IconData iconeDir;
   final TextInputType tipo;
   final Function(String) onChanged;
 
@@ -13,7 +14,8 @@ class LoginWidget extends StatelessWidget {
       {this.controller,
       this.rotulo,
       this.dica,
-      this.icone,
+      this.iconeEsq,
+      this.iconeDir,
       this.tipo,
       this.onChanged});
 
@@ -32,7 +34,8 @@ class LoginWidget extends StatelessWidget {
         child: TextField(
           style: TextStyle(fontSize: 20.0),
           decoration: InputDecoration(
-            icon: Icon(icone) != null ? Icon(icone) : null,
+            prefixIcon: Icon(iconeEsq) != null ? Icon(iconeEsq) : null,
+            suffixIcon: iconeDir != null ? Icon(iconeDir) : null,
             labelText: rotulo,
             hintText: dica,
             border: InputBorder.none,

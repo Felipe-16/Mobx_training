@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:mobx/mobx.dart';
 import 'package:mobx_training/components/login_widgets.dart';
-import 'file:///C:/Users/Felps/Desktop/Mobx_training/mobx_training/lib/home/home_screen.dart';
+import 'package:mobx_training/home/home_screen.dart';
 import 'login_controller.dart';
 
 const _rotuloEmail = 'Email';
-const _dicaEmail = 'seunome@dominio.com';
+const _dicaEmail = 'email@dominio.com';
 const _rotuloSenha = 'Senha';
 const _dicaSenha = '*****';
 
@@ -17,6 +19,25 @@ class Login extends StatefulWidget {
 
 class LoginState extends State<Login> {
   Login_controller login_controller = Login_controller();
+
+  ReactionDisposer disposer;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    // Outro jeito de fazer
+    disposer = reaction((_) => login_controller.loggedIn, (loggedIn) {
+      if (login_controller.loggedIn)
+        Navigator.push(context, MaterialPageRoute(builder: (_) => Home()));
+    });
+
+    // Um jeito de fazer
+    // autorun((_) {
+    //   if (login_controller.loggedIn)
+    //     Navigator.push(context, MaterialPageRoute(builder: (_) => Home()));
+    // });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,30 +69,33 @@ class LoginState extends State<Login> {
                   LoginWidget(
                     rotulo: _rotuloEmail,
                     dica: _dicaEmail,
-                    icone: Icons.email,
+                    iconeEsq: Icons.email,
                     tipo: TextInputType.emailAddress,
                     onChanged: login_controller.setEmail,
                   ),
                   LoginWidget(
                     rotulo: _rotuloSenha,
                     dica: _dicaSenha,
-                    icone: Icons.lock,
+                    iconeEsq: Icons.lock,
+                    iconeDir: Icons.visibility,
                     tipo: TextInputType.text,
                     onChanged: login_controller.setSenha,
                   ),
-                  RaisedButton(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    onPressed: () {
-                      print('entrando...');
-                      final home = Home();
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) {
-                        return Home();
-                      }));
+                  Observer(
+                    builder: (_) {
+                      return RaisedButton(
+                        child: login_controller.loading
+                            ? CircularProgressIndicator(
+                                valueColor:
+                                    AlwaysStoppedAnimation(Colors.white),
+                              )
+                            : Text('Entrar'),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        onPressed: login_controller.loginPressed,
+                      );
                     },
-                    child: Text('Entrar'),
                   ),
                 ],
               ),
@@ -80,5 +104,11 @@ class LoginState extends State<Login> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    disposer();
+    super.dispose();
   }
 }
