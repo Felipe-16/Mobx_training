@@ -3,6 +3,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:mobx/mobx.dart';
 import 'package:mobx_training/components/login_widgets.dart';
 import 'package:mobx_training/home/home_screen.dart';
+import 'package:provider/provider.dart';
 import 'login_controller.dart';
 
 const _rotuloEmail = 'Email';
@@ -18,13 +19,15 @@ class Login extends StatefulWidget {
 }
 
 class LoginState extends State<Login> {
-  Login_controller login_controller = Login_controller();
+  Login_controller login_controller;
 
   ReactionDisposer disposer;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
+
+    login_controller = Provider.of<Login_controller>(context);
 
     // Outro jeito de fazer
     disposer = reaction((_) => login_controller.loggedIn, (loggedIn) {
